@@ -237,6 +237,8 @@ def main():
                     ser = serial.Serial(port_name, BAUD_RATE, timeout=0.1)
                     log.info("Opened serial port %s", port_name)
                     wait_for_ready(ser)
+                    # 重连后 ESP32 已复位（DTR），强制重发当前状态
+                    current_state = ""
                 except serial.SerialException as e:
                     log.error("Cannot open %s: %s", port_name, e)
                     ser = None
